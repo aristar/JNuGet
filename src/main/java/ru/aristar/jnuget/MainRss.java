@@ -1,17 +1,24 @@
 package ru.aristar.jnuget;
 
+import com.sun.syndication.feed.synd.SyndFeed;
+import com.sun.syndication.io.FeedException;
+import com.sun.syndication.io.SyndFeedOutput;
 import java.io.IOException;
 import java.io.PrintWriter;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author sviridov
  */
 public class MainRss extends HttpServlet {
+
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     /** 
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code> methods.
@@ -25,20 +32,29 @@ public class MainRss extends HttpServlet {
         response.setContentType("text/html;charset=UTF-8");
         PrintWriter out = response.getWriter();
         try {
+            PackageInfoGenerator generator = new PackageInfoGenerator();
+            SyndFeed feed = generator.makeFeed();
+            response.setStatus(HttpServletResponse.SC_OK);
+            response.setContentType("application/rss+xml");
+            SyndFeedOutput output = new SyndFeedOutput();
+            output.output(feed, response.getWriter());
             //TODO Заменить сервлет на RSS. Сама рассылка под ним в /Packages
            /*
              * <?xml version="1.0" encoding="windows-1251" standalone="yes"?>
-               <service xml:base="Полный URL, куда должен быть задеполен сервлет" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:app="http://www.w3.org/2007/app" xmlns="http://www.w3.org/2007/app">
-               <workspace>
-                    <atom:title>Default</atom:title>
-                    <collection href="Packages">
-               <atom:title>Packages</atom:title>
-                </collection>
-                </workspace>
-                </service>
+            <service xml:base="Полный URL, куда должен быть задеполен сервлет" xmlns:atom="http://www.w3.org/2005/Atom" xmlns:app="http://www.w3.org/2007/app" xmlns="http://www.w3.org/2007/app">
+            <workspace>
+            <atom:title>Default</atom:title>
+            <collection href="Packages">
+            <atom:title>Packages</atom:title>
+            </collection>
+            </workspace>
+            </service>
              */
-           
-        } finally {            
+
+        } catch (FeedException e) {
+            logger.error("Ошибка получения ленты RSS", e);
+            throw new IOException(e);
+        } finally {
             out.close();
         }
     }
