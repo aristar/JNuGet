@@ -16,7 +16,7 @@ public class MainUrlTest {
     public void testMarshallToXml() throws Exception {
         MainUrl mainUrl = new MainUrl();
         StringWriter writer = new StringWriter();
-        mainUrl.wirteXml(writer);
+        mainUrl.writeXml(writer);
         System.out.println(writer.toString());
     }
 }

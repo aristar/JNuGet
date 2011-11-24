@@ -31,19 +31,21 @@ public class MainUrl {
 
     public static class Workspace {
 
-        @XmlElement(name="title",namespace="atom")
+        @XmlElement(name = "title", namespace = "http://www.w3.org/2005/Atom")
         private String title = "Default";
     }
+    
     private UrlFactory urlFactory;
+    
     @XmlElement(name = "workspace", namespace = "http://www.w3.org/2007/app")
     private Workspace workspace = new Workspace();
 
-    @XmlAttribute(name = "base", namespace = "")
+    @XmlAttribute(name = "xml:base", namespace = "")
     private String getBaseUrl() {
         return "Полный URL, куда должен быть задеполен сервлет";
     }
 
-    public void wirteXml(Writer writer) throws JAXBException {
+    public void writeXml(Writer writer) throws JAXBException {
         JAXBContext context = JAXBContext.newInstance(this.getClass());
         Marshaller marshaller = context.createMarshaller();
         marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, true);
