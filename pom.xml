@@ -19,6 +19,12 @@
     </developers>
     <dependencies>
         <dependency>
+            <groupId>javax.servlet.jsp</groupId>
+            <artifactId>jsp-api</artifactId>
+            <version>2.1</version>
+            <scope>provided</scope>
+        </dependency>        
+        <dependency>
             <groupId>javax.servlet</groupId>
             <artifactId>servlet-api</artifactId>
             <version>2.5</version>
@@ -45,6 +51,11 @@
             <groupId>rome</groupId>
             <artifactId>rome</artifactId>
             <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.semver</groupId>
+            <artifactId>api</artifactId>
+            <version>0.9.4</version>
         </dependency>
     </dependencies>
 </project>
