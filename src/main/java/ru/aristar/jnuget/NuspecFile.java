@@ -7,6 +7,7 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
 /**
  *
@@ -20,7 +21,8 @@ public class NuspecFile {
         @XmlElement(name = "id", namespace = "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd")
         private String id;
         @XmlElement(name = "version", namespace = "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd")
-        private String version;
+        @XmlJavaTypeAdapter(value = VersiontypeAdapter.class)
+        private Version version;
     }
     @XmlElement(name = "metadata", namespace = "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd")
     private Metadata metadata;
@@ -41,7 +43,7 @@ public class NuspecFile {
         return metadata.id;
     }
 
-    public String getVersion() {
+    public Version getVersion() {
         return metadata.version;
     }
 }

@@ -14,7 +14,7 @@ public class NuspecFileTest {
         final String fileName = "/test.nuspec.xml";
         NuspecFile result = NuspecFile.Parse(NuspecFileTest.class.getResourceAsStream(fileName));
         assertEquals("Идентификатор пакета", "Neolant.ProjectWise.IsolationLevel.Implementation", result.getId());
-        assertEquals("Версия пакета", "1.4.7.550", result.getVersion());
+        assertEquals("Версия пакета", Version.parse("1.4.7.550"), result.getVersion());
         fail("Тест не дописан");
     }
 }

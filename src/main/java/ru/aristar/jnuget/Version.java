@@ -7,35 +7,23 @@ import java.util.regex.Pattern;
  *
  * @author unlocker
  */
-public class Version {
+public class Version implements Comparable<Version> {
 
-    private static Pattern parser = Pattern.compile("(\\d+)\\.?(\\d*)\\.?(\\d*)[.-]?(\\w*)");
+    private static Pattern pattern = Pattern.compile("(\\d+)\\.?(\\d*)\\.?(\\d*)\\.?(.*)");
 
-    public static Version parse(String input) throws Exception {
-        Matcher matcher = parser.matcher(input);
-        if (!matcher.find()) {
-            throw new Exception("Аргумент неправильный.");
-        }
-        int major = ParseInt(matcher.group(1));
-        int minor = ParseInt(matcher.group(2));
-        int build = ParseInt(matcher.group(3));
-        String revision = matcher.group(4);
-        return new Version(major, minor, build, revision);
-    }
-
-    private static int ParseInt(String group) {
+    private static Integer ParseInt(String group) {
         if (group == null || group.isEmpty()) {
-            return 0;
+            return null;
         } else {
             return Integer.parseInt(group);
         }
     }
-    private final int major;
-    private final int minor;
-    private final int build;
+    private final Integer major;
+    private final Integer minor;
+    private final Integer build;
     private final String revision;
 
-    public Version(int major, int minor, int build, String revision) {
+    public Version(Integer major, Integer minor, Integer build, String revision) {
         this.major = major;
         this.minor = minor;
         this.build = build;
@@ -46,19 +34,65 @@ public class Version {
         throw new UnsupportedOperationException("Not yet implemented");
     }
 
-    public int getMajor() {
+    public Integer getMajor() {
         return major;
     }
 
-    public int getMinor() {
+    public Integer getMinor() {
         return minor;
     }
 
-    public int getBuild() {
+    public Integer getBuild() {
         return build;
     }
 
     public String getRevision() {
         return revision;
+    }
+
+    public static Version parse(String input) throws Exception {
+        Matcher matcher = pattern.matcher(input);
+        if (!matcher.find()) {
+            throw new Exception("Аргумент неправильный. " + input);
+        }
+        Integer major = ParseInt(matcher.group(1));
+        Integer minor = ParseInt(matcher.group(2));
+        Integer build = ParseInt(matcher.group(3));
+        String revision = matcher.group(4);
+        return new Version(major, minor, build, revision);
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null) {
+            return false;
+        }
+        if (!(obj instanceof Version)) {
+            return false;
+        } else {
+            Version o = (Version) obj;
+            return this.major == o.major
+                    && this.minor == o.minor
+                    && this.build == o.build
+                    && stringsNullOrEquival(this.revision, o.revision);
+        }
+    }
+
+    public int compareTo(Version o) {
+        if (this.equals(o)) {
+            return 0;
+        } else {
+            return 1;
+        }
+    }
+
+    private boolean stringsNullOrEquival(String str1, String str2) {
+        if (str1 == null && str2 == null) {
+            return true;
+        }
+        if (str1 == null || str2 == null) {
+            return false;
+        }
+        return str1.equals(str2);
     }
 }
