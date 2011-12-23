@@ -17,7 +17,7 @@ public class VersionTest {
     public void TestConstructor() throws Exception
     {
         String strVersion = "1.2.3.4";
-        Version version = Version.Parse(strVersion);
+        Version version = Version.parse(strVersion);
         Assert.assertEquals("Major", 1, version.getMajor());
         Assert.assertEquals("Minor", 2, version.getMinor());
         Assert.assertEquals("Build", 3, version.getBuild());

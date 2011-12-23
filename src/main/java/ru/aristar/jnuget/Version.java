@@ -1,4 +1,5 @@
 package ru.aristar.jnuget;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -7,14 +8,13 @@ import java.util.regex.Pattern;
  * @author unlocker
  */
 public class Version {
-    
+
     private static Pattern parser = Pattern.compile("(\\d+)\\.?(\\d*)\\.?(\\d*)[.-]?(\\w*)");
-    
-    public static Version Parse(String input) throws Exception
-    {
+
+    public static Version parse(String input) throws Exception {
         Matcher matcher = parser.matcher(input);
-        if(!matcher.find()){
-            throw new Exception("Аргумент неправильный.");
+        if (!matcher.find()) {
+            throw new Exception("РђСЂРіСѓРјРµРЅС‚ РЅРµРїСЂР°РІРёР»СЊРЅС‹Р№.");
         }
         int major = ParseInt(matcher.group(1));
         int minor = ParseInt(matcher.group(2));
@@ -24,43 +24,41 @@ public class Version {
     }
 
     private static int ParseInt(String group) {
-        if(group == null || group.isEmpty())
+        if (group == null || group.isEmpty()) {
             return 0;
-        else
+        } else {
             return Integer.parseInt(group);
+        }
     }
-    
     private final int major;
     private final int minor;
     private final int build;
     private final String revision;
-    
-    public Version(int major, int minor, int build, String revision)
-    {
+
+    public Version(int major, int minor, int build, String revision) {
         this.major = major;
         this.minor = minor;
         this.build = build;
         this.revision = revision;
     }
-    
-    public int getMajor()
-    {
+
+    Version(Object[] object) {
+        throw new UnsupportedOperationException("Not yet implemented");
+    }
+
+    public int getMajor() {
         return major;
     }
-    
-    public int getMinor()
-    {
+
+    public int getMinor() {
         return minor;
     }
-    
-    public int getBuild()
-    {
+
+    public int getBuild() {
         return build;
     }
-    
-    public String getRevision()
-    {
+
+    public String getRevision() {
         return revision;
     }
-    
 }
