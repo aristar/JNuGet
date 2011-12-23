@@ -17,11 +17,6 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 public class NuspecFile {
 
     /**
-     * Пространство имен для спецификации пакета NuGet
-     */
-    public static final String NUSPEC_XML_NAMESPACE = "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd";
-
-    /**
      * Класс содержащий метаанные пакета NuGet
      */
     public static class Metadata {
@@ -63,13 +58,76 @@ public class NuspecFile {
         @XmlElement(name = "description", namespace = NUSPEC_XML_NAMESPACE)
         private String description;
         /**
-         * кому пренадлежат права на пакет
+         * Кому пренадлежат права на пакет
          */
         @XmlElement(name = "copyright", namespace = NUSPEC_XML_NAMESPACE)
         private String copyright;
     }
+    /**
+     * Метаданные пакета
+     */
     @XmlElement(name = "metadata", namespace = NUSPEC_XML_NAMESPACE)
     private Metadata metadata;
+
+    /**
+     * @return Уникальный идентификатор пакета
+     */
+    public String getId() {
+        return metadata.id;
+    }
+
+    /**
+     * @return Версия пакета
+     */
+    public Version getVersion() {
+        return metadata.version;
+    }
+
+    /**
+     * @return Короткое описание пакета
+     */
+    public String getTitle() {
+        return metadata.title;
+    }
+
+    /**
+     * @return Список авторов пакета
+     */
+    public String getAuthors() {
+        return metadata.authors;
+    }
+
+    /**
+     * @return Список владельцев пакета
+     */
+    public String getOwners() {
+        return metadata.owners;
+    }
+
+    /**
+     * @return Требуется ли запрос лицензии
+     */
+    public boolean isRequireLicenseAcceptance() {
+        if (metadata.requireLicenseAcceptance == null) {
+            return false;
+        } else {
+            return metadata.requireLicenseAcceptance;
+        }
+    }
+
+    /**
+     * @return Описание пакета
+     */
+    public String getDescription() {
+        return metadata.description;
+    }
+
+    /**
+     * @return Кому пренадлежат права на пакет
+     */
+    public String getCopyright() {
+        return metadata.copyright;
+    }
 
     //TODO Добавить проверку схемы
     /**
@@ -96,36 +154,8 @@ public class NuspecFile {
         NuspecFile result = (NuspecFile) unmarshaller.unmarshal(inputStream);
         return result;
     }
-
-    public String getId() {
-        return metadata.id;
-    }
-
-    public Version getVersion() {
-        return metadata.version;
-    }
-
-    public String getTitle() {
-        return metadata.title;
-    }
-
-    public String getAuthors() {
-        return metadata.authors;
-    }
-
-    public String getOwners() {
-        return metadata.owners;
-    }
-
-    public Boolean isRequireLicenseAcceptance() {
-        return metadata.requireLicenseAcceptance;
-    }
-
-    public String getDescription() {
-        return metadata.description;
-    }
-
-    public String getCopyright() {
-        return metadata.copyright;
-    }
+    /**
+     * Пространство имен для спецификации пакета NuGet
+     */
+    public static final String NUSPEC_XML_NAMESPACE = "http://schemas.microsoft.com/packaging/2011/08/nuspec.xsd";
 }
