@@ -16,18 +16,5 @@ public class MainUrlTest {
         mainUrl.writeXml(writer);
         System.out.println(writer.toString());
 
-//        File file = new File("sfdasd");
-//        ZipInputStream inputStream = new ZipInputStream(new FileInputStream(file));
-//        ZipEntry entry;
-//        loop:
-//        while ((entry = inputStream.getNextEntry()) != null) {
-//            if (!entry.isDirectory() && entry.getName().endsWith(".nuspec")) {
-//                byte[] buffer = new byte[(int) entry.getSize()];
-//                inputStream.read(buffer, 0, buffer.length);
-//                
-//                break loop;
-//            }
-//        }
-
     }
 }

@@ -21,6 +21,8 @@ public class NuspecFile {
      */
     public static class Metadata {
 
+        //TODO Добавить поля
+        
         /**
          * Уникальный идентификатор пакета
          */
