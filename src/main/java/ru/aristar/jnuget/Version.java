@@ -82,7 +82,8 @@ public class Version implements Comparable<Version> {
         if (this.equals(o)) {
             return 0;
         } else {
-            return 1;
+            throw new UnsupportedOperationException("Сравнение на больше-меньше"
+                    + " не реализовано");
         }
     }
 
