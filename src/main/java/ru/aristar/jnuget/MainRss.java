@@ -3,8 +3,17 @@ package ru.aristar.jnuget;
 import com.sun.syndication.feed.synd.SyndFeed;
 import com.sun.syndication.io.FeedException;
 import com.sun.syndication.io.SyndFeedOutput;
+import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.channels.Channels;
+import java.nio.channels.FileChannel;
+import java.nio.channels.WritableByteChannel;
+import java.nio.file.FileSystems;
+import java.nio.file.OpenOption;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -46,10 +55,15 @@ public class MainRss extends HttpServlet {
             <atom:title>Default</atom:title>
             <collection href="Packages">
             <atom:title>Packages</atom:title>
-            </collection>
+            </collection> Алекс
             </workspace>
             </service>
              */
+            WritableByteChannel outputChannel = Channels.newChannel(response.getOutputStream());
+            File file = new File("sdasdasdas");
+            FileInputStream fileInputStream = new FileInputStream(file);
+            FileChannel channel = fileInputStream.getChannel();
+            channel.transferTo(0, channel.size(), outputChannel);
 
         } catch (FeedException e) {
             logger.error("Ошибка получения ленты RSS", e);

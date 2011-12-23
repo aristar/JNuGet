@@ -52,10 +52,5 @@
             <artifactId>rome</artifactId>
             <version>1.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.semver</groupId>
-            <artifactId>api</artifactId>
-            <version>0.9.4</version>
-        </dependency>
     </dependencies>
 </project>
