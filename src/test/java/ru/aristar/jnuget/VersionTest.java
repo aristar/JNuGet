@@ -10,7 +10,7 @@ import org.junit.Test;
 public class VersionTest {
 
     @Test
-    public void TestConstructor() throws Exception {
+    public void testConstructor() throws Exception {
         //GIVEN
         String strVersion = "1.2.3.4";
         //WHEN
@@ -21,64 +21,79 @@ public class VersionTest {
         Assert.assertEquals("Build", Integer.valueOf(3), version.getBuild());
         Assert.assertEquals("Revision", "4", version.getRevision());
     }
-    
+
     @Test
-    public void TestGreaterMajor() throws Exception {
+    public void testGreaterMajor() throws Exception {
         // GIVEN
         String newerStr = "2.1.0";
         String olderStr = "1.2";
         Version older = Version.parse(olderStr);
         Version newer = Version.parse(newerStr);
-        
+
         // WHEN 
         int result = older.compareTo(newer);
-        
+
         // THEN
-        Assert.assertEquals("Версия "+olderStr+" должна быть старше, чем "+newerStr, -1, result);
+        Assert.assertEquals("Версия " + olderStr + " должна быть старше, чем " + newerStr, -1, result);
     }
-    
+
     @Test
-    public void TestGreaterMinor() throws Exception {
+    public void testGreaterMinor() throws Exception {
         // GIVEN
         String newerStr = "1.3";
         String olderStr = "1.2.0";
         Version older = Version.parse(olderStr);
         Version newer = Version.parse(newerStr);
-        
+
         // WHEN 
         int result = older.compareTo(newer);
-        
+
         // THEN
-        Assert.assertEquals("Версия "+olderStr+" должна быть старше, чем "+newerStr, -1, result);
+        Assert.assertEquals("Версия " + olderStr + " должна быть старше, чем " + newerStr, -1, result);
     }
-    
+
     @Test
-    public void TestGreaterBuild() throws Exception {
+    public void testGreaterBuild() throws Exception {
         // GIVEN
         String newerStr = "1.1.3";
         String olderStr = "1.1";
         Version older = Version.parse(olderStr);
         Version newer = Version.parse(newerStr);
-        
+
         // WHEN 
         int result = older.compareTo(newer);
-        
+
         // THEN
-        Assert.assertEquals("Версия "+olderStr+" должна быть старше, чем "+newerStr, -1, result);
+        Assert.assertEquals("Версия " + olderStr + " должна быть старше, чем " + newerStr, -1, result);
     }
-    
+
     @Test
-    public void TestGreaterRevision() throws Exception {
+    public void testGreaterRevision() throws Exception {
         // GIVEN
         String newerStr = "1.2.3-beta";
         String olderStr = "1.2.3-alpha";
         Version older = Version.parse(olderStr);
         Version newer = Version.parse(newerStr);
-        
+
         // WHEN 
         int result = older.compareTo(newer);
-        
+
         // THEN
-        Assert.assertEquals("Версия "+olderStr+" должна быть старше, чем "+newerStr, -1, result);
+        Assert.assertEquals("Версия " + olderStr + " должна быть старше, чем " + newerStr, -1, result);
+    }
+
+    @Test
+    public void testMinorGreaterBuildLesser() throws Exception {
+           // GIVEN
+        String newerStr = "1.3.3";
+        String olderStr = "1.2.5";
+        Version older = Version.parse(olderStr);
+        Version newer = Version.parse(newerStr);
+
+        // WHEN 
+        int result = newer.compareTo(older);
+
+        // THEN
+        Assert.assertEquals("Версия " + newerStr + " должна быть старше, чем " + olderStr, 1, result);
     }
 }

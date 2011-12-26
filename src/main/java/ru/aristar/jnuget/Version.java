@@ -93,9 +93,9 @@ public class Version implements Comparable<Version> {
         if (this.equals(o)) {
             return 0;
         } else {
-            if(this.major > o.getMajor() && this.minor > o.getMinor() 
-                    && this.build > o.getBuild() 
-                    && this.revision.compareToIgnoreCase(o.getRevision()) > 0)
+            if(this.major > o.major && this.minor > o.minor
+                    && this.build > o.build
+                    && this.revision.compareToIgnoreCase(o.revision) > 0)
                 return 1;
             else 
                 return -1;
