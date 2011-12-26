@@ -1,5 +1,6 @@
 package ru.aristar.jnuget;
 
+import java.util.Objects;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -74,26 +75,41 @@ public class Version implements Comparable<Version> {
             return this.major == o.major
                     && this.minor == o.minor
                     && this.build == o.build
-                    && stringsNullOrEquival(this.revision, o.revision);
+                    && stringsNullOrEqual(this.revision, o.revision);
         }
     }
 
+    @Override
+    public int hashCode() {
+        int hash = 7;
+        hash = 89 * hash + Objects.hashCode(this.major);
+        hash = 89 * hash + Objects.hashCode(this.minor);
+        hash = 89 * hash + Objects.hashCode(this.build);
+        hash = 89 * hash + Objects.hashCode(this.revision);
+        return hash;
+    }
+    
     public int compareTo(Version o) {
         if (this.equals(o)) {
             return 0;
         } else {
-            throw new UnsupportedOperationException("Сравнение на больше-меньше"
-                    + " не реализовано");
+            if(this.major > o.getMajor() && this.minor > o.getMinor() 
+                    && this.build > o.getBuild() 
+                    && this.revision.compareToIgnoreCase(o.getRevision()) > 0)
+                return 1;
+            else 
+                return -1;
         }
     }
 
-    private boolean stringsNullOrEquival(String str1, String str2) {
+    private boolean stringsNullOrEqual(String str1, String str2) {
         if (str1 == null && str2 == null) {
             return true;
         }
         if (str1 == null || str2 == null) {
             return false;
         }
-        return str1.equals(str2);
+        // Сравнение без учета регистра.
+        return str1.toLowerCase().equals(str2.toLowerCase());
     }
 }
