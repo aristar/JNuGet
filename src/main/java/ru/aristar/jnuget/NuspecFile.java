@@ -2,6 +2,7 @@ package ru.aristar.jnuget;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
@@ -22,7 +23,6 @@ public class NuspecFile {
     public static class Metadata {
 
         //TODO Добавить поля
-        
         /**
          * Уникальный идентификатор пакета
          */
@@ -32,7 +32,7 @@ public class NuspecFile {
          * Версия пакета
          */
         @XmlElement(name = "version", namespace = NUSPEC_XML_NAMESPACE)
-        @XmlJavaTypeAdapter(value = VersiontypeAdapter.class)
+        @XmlJavaTypeAdapter(value = VersionTypeAdapter.class)
         private Version version;
         /**
          * Короткое описание пакета
@@ -64,6 +64,15 @@ public class NuspecFile {
          */
         @XmlElement(name = "copyright", namespace = NUSPEC_XML_NAMESPACE)
         private String copyright;
+        /**
+         * Список меток, разделенных запятыми
+         */
+        @XmlElement(name = "tags", namespace = NUSPEC_XML_NAMESPACE)
+        @XmlJavaTypeAdapter(value = StringListTypeAdapter.class)
+        private List<String> tags;
+        
+//        @XmlElement(name = "tags", namespace = NUSPEC_XML_NAMESPACE)
+//        private List<Reference> references;
     }
     /**
      * Метаданные пакета

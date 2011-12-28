@@ -5,7 +5,7 @@ import javax.xml.bind.annotation.adapters.XmlAdapter;
  *
  * @author sviridov
  */
-public class VersiontypeAdapter extends XmlAdapter<String, Version> {
+public class VersionTypeAdapter extends XmlAdapter<String, Version> {
 
     @Override
     public String marshal(Version version) throws Exception {
