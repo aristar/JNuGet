@@ -88,17 +88,48 @@ public class Version implements Comparable<Version> {
         hash = 89 * hash + Objects.hashCode(this.revision);
         return hash;
     }
-    
+
     public int compareTo(Version o) {
         if (this.equals(o)) {
             return 0;
         } else {
-            if(this.major > o.major && this.minor > o.minor
-                    && this.build > o.build
-                    && this.revision.compareToIgnoreCase(o.revision) > 0)
+            if (this.major > o.major
+                    || (this.major == o.major && compareIntegerPossibleNull(this.minor, o.minor) > 0)
+                    || (this.major == o.major && this.minor == o.minor && compareIntegerPossibleNull(this.build, o.build) > 0)
+                    || (this.major == o.major && this.minor == o.minor && this.build == o.build
+                    && compareStringPossibleNull(this.revision, o.revision) > 0)) {
                 return 1;
-            else 
+            } else {
                 return -1;
+            }
+        }
+    }
+
+    private int compareStringPossibleNull(String str1, String str2) {
+        if (stringsNullOrEqual(str1, str2)) {
+            return 0;
+        } else {
+            if (str1 == null && str2 != null) {
+                return 1;
+            } else if (str1 != null && str2 == null) {
+                return -1;
+            } else {
+                return str1.compareToIgnoreCase(str2);
+            }
+        }
+    }
+
+    private int compareIntegerPossibleNull(Integer int1, Integer int2) {
+        if (int1 == null && int2 == null) {
+            return 0;
+        } else {
+            if (int1 == null && int2 != null) {
+                return -1;
+            } else if (int1 != null && int2 == null) {
+                return 1;
+            } else {
+                return int1.compareTo(int2);
+            }
         }
     }
 
