@@ -71,8 +71,11 @@ public class NuspecFile {
         @XmlJavaTypeAdapter(value = StringListTypeAdapter.class)
         private List<String> tags;
         
-//        @XmlElement(name = "tags", namespace = NUSPEC_XML_NAMESPACE)
-//        private List<Reference> references;
+        @XmlElement(name = "tags", namespace = NUSPEC_XML_NAMESPACE)
+        private List<Reference> references;
+        
+        @XmlElement(name = "dependencies", namespace = NUSPEC_XML_NAMESPACE)
+        private List<Dependency> dependencies;
     }
     /**
      * Метаданные пакета
