@@ -5,14 +5,18 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- *
+ * Версия пакета
  * @author unlocker
  */
 public class Version implements Comparable<Version> {
 
+    /**
+     * Выражение разбора
+     */
     private static Pattern pattern = Pattern.compile("(\\d+)\\.?(\\d*)\\.?(\\d*)\\.?(.*)");
 
-    private static Integer ParseInt(String group) {
+    
+    private static Integer parseInt(String group) {
         if (group == null || group.isEmpty()) {
             return null;
         } else {
@@ -56,9 +60,9 @@ public class Version implements Comparable<Version> {
         if (!matcher.find()) {
             throw new Exception("Аргумент неправильный. " + input);
         }
-        Integer major = ParseInt(matcher.group(1));
-        Integer minor = ParseInt(matcher.group(2));
-        Integer build = ParseInt(matcher.group(3));
+        Integer major = parseInt(matcher.group(1));
+        Integer minor = parseInt(matcher.group(2));
+        Integer build = parseInt(matcher.group(3));
         String revision = matcher.group(4);
         return new Version(major, minor, build, revision);
     }
@@ -87,6 +91,29 @@ public class Version implements Comparable<Version> {
         hash = 89 * hash + Objects.hashCode(this.build);
         hash = 89 * hash + Objects.hashCode(this.revision);
         return hash;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(major.intValue());
+        if (minor != null) {
+            buffer.append(".").append(minor.intValue());
+
+            if (build != null) {
+                buffer.append(".").append(build.intValue());
+
+                if (revision != null) {
+                    if (!revision.startsWith("-")) {
+                        buffer.append(".");
+                    }
+                    buffer.append(revision);
+                }
+            }
+        }
+
+
+        return buffer.toString();
     }
 
     public int compareTo(Version o) {

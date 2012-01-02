@@ -62,7 +62,7 @@ public class StringListTypeAdapterTest {
         // GIVEN
         StringListTypeAdapter adapter = new StringListTypeAdapter();
         final String multipleInput = "tag1 suffix1, tag2 , tag3 suffix3 ";
-        final String result = "tag1 suffix1,tag2,tag3 suffix3 ";
+        final String result = "tag1 suffix1,tag2,tag3 suffix3";
         
         // WHEN
         List<String> list = adapter.unmarshal(multipleInput);

@@ -2,11 +2,13 @@ package ru.aristar.jnuget;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.List;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
@@ -22,7 +24,6 @@ public class NuspecFile {
      */
     public static class Metadata {
 
-        //TODO Добавить поля
         /**
          * Уникальный идентификатор пакета
          */
@@ -35,7 +36,7 @@ public class NuspecFile {
         @XmlJavaTypeAdapter(value = VersionTypeAdapter.class)
         private Version version;
         /**
-         * Короткое описание пакета
+         * Заглавие
          */
         @XmlElement(name = "title", namespace = NUSPEC_XML_NAMESPACE)
         private String title;
@@ -60,21 +61,37 @@ public class NuspecFile {
         @XmlElement(name = "description", namespace = NUSPEC_XML_NAMESPACE)
         private String description;
         /**
+         * Краткое описание
+         */
+        @XmlElement(name = "summary", namespace = NUSPEC_XML_NAMESPACE)
+        private String summary;
+        /**
          * Кому пренадлежат права на пакет
          */
         @XmlElement(name = "copyright", namespace = NUSPEC_XML_NAMESPACE)
         private String copyright;
+        /**
+         * Язык
+         */
+        @XmlElement(name = "language", namespace = NUSPEC_XML_NAMESPACE)
+        private String language;
         /**
          * Список меток, разделенных запятыми
          */
         @XmlElement(name = "tags", namespace = NUSPEC_XML_NAMESPACE)
         @XmlJavaTypeAdapter(value = StringListTypeAdapter.class)
         private List<String> tags;
-        
-        @XmlElement(name = "tags", namespace = NUSPEC_XML_NAMESPACE)
+        /**
+         * Список ссылок
+         */
+        @XmlElementWrapper(name="references", namespace = NUSPEC_XML_NAMESPACE)
+        @XmlElement(name = "reference", namespace = NUSPEC_XML_NAMESPACE)
         private List<Reference> references;
-        
-        @XmlElement(name = "dependencies", namespace = NUSPEC_XML_NAMESPACE)
+        /**
+         * Список зависимостей
+         */
+        @XmlElementWrapper(name= "dependencies", namespace = NUSPEC_XML_NAMESPACE)
+        @XmlElement(name = "dependency", namespace = NUSPEC_XML_NAMESPACE)
         private List<Dependency> dependencies;
     }
     /**
@@ -98,7 +115,7 @@ public class NuspecFile {
     }
 
     /**
-     * @return Короткое описание пакета
+     * @return Заглавие
      */
     public String getTitle() {
         return metadata.title;
@@ -135,12 +152,53 @@ public class NuspecFile {
     public String getDescription() {
         return metadata.description;
     }
+    
+    /**
+     * @return Краткое описание пакета
+     */
+    public String getSummary() {
+        return metadata.summary;
+    }
 
     /**
      * @return Кому пренадлежат права на пакет
      */
     public String getCopyright() {
         return metadata.copyright;
+    }
+    
+    /**
+     * @return Язык
+     */
+    public String getLanguage() {
+        return metadata.language;
+    }
+    
+    /**
+     * @return Список меток
+     */
+    public List<String> getTags(){
+        if(metadata.tags == null)
+            return new ArrayList<>();
+        return metadata.tags;
+    }
+    
+    /**
+     * @return Список ссылок
+     */
+    public List<Reference> getReferences(){
+        if(metadata.references == null)
+            return new ArrayList<>();
+        return metadata.references;
+    }
+    
+    /**
+     * @return Список зависимостей
+     */
+    public List<Dependency> getDependencies(){
+        if(metadata.dependencies == null)
+            return new ArrayList<>();
+        return metadata.dependencies;
     }
 
     //TODO Добавить проверку схемы
