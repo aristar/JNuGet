@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlAttribute;
  * Ссылка на файл.
  * @author Unlocker
  */
-class Reference {
+public class Reference {
     
     public Reference(){}
 

@@ -7,7 +7,7 @@ import static org.junit.Assert.*;
  *
  * @author sviridov
  */
-public class VersiontypeAdapterTest {
+public class VersionTypeAdapterTest {
 
     @Test
     public void testUnmarshal() throws Exception {

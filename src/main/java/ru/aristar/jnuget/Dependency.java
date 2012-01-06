@@ -8,7 +8,7 @@ import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
  * Описание зависимости
  * @author Unlocker
  */
-class Dependency {
+public class Dependency {
 
     /**
      * Идентификатор пакета
